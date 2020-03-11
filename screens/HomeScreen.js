@@ -8,7 +8,7 @@ const Home = (props) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Home Screen</Text>
-      <ContactList />
+      <ContactList navigation={props.navigation} />
       <Button
         title="Go to Search"
         onPress={() => {

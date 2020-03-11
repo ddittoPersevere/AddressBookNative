@@ -27,13 +27,13 @@ const Contact = ({name, email, phone, id, ...props}) => (
             </View>
             <View>
                 <Text>{email}</Text>
-                {
-                    phone && <Text>{phone}</Text>
-                }
+                
 
             </View>
             <View>
-                <Text></Text>
+                {
+                    phone != undefined && <Text>{phone}</Text>
+                }
             </View>
         </View>
 )

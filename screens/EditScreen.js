@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button } from 'react-native';
+import { Text, View, Button, TextInput } from 'react-native';
 import {connect} from 'react-redux'
 import Form from '../components/Form'
 import {editContact} from '../actions/contactActions'
@@ -11,21 +11,17 @@ import {editContact} from '../actions/contactActions'
 // 'refreshed' using 'this.props.history.push('/')'
 
 class EditContact extends Component {
-    ID = this.props.navigation.state.id
     state = {
-        contact : this.props.contacts.find((item) => item.id == ID),
-        name: this.state.contact ? this.state.contact.name : '',
-        email: this.state.contact ? this.state.contact.email : '',
-        phone: this.state.contact ? this.state.contact.phone : '',
+        name: this.props.contact ? this.props.contact.name : '',
+        email: this.props.contact ? this.props.contact.email : '',
+        phone: this.props.ontact ? this.props.contact.phone : '',
     }
     
-    onSubmit = (contact) => {
-        this.props.editContact(this.props.match.params.id, contact)
-        // this.props.history.push('/')
+    onSubmit = () => {
+        this.props.editContact(this.props.route.params.id, this.state)
+        this.props.navigation.navigate('Home');
     }
     render(){
-        const { params } = this.props.navigation.state;
-        const ID = params ? params.itemId : null;
         return (
             <View>
                 <View>
@@ -71,7 +67,7 @@ class EditContact extends Component {
                     
                     <Button title="Submit"
                         onPress={() => {
-                            this.validate()
+                            this.onSubmit()
                         }} 
                     />
                 </View>
@@ -88,8 +84,8 @@ class EditContact extends Component {
 }
 
 // finds Contact in state that matches dynamic URL parameter
-const mapStateToProps = (state) => ({
-    contacts : state.contacts
+const mapStateToProps = (state, props) => ({
+    contact : state.contacts.find((item) => item.id == props.route.params.id)
 })
 const mapDispatchToProps = (dispatch) => ({
     editContact : (id, contact) => dispatch(editContact(id, contact))

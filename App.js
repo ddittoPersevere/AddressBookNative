@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { connect } from 'react-redux'
-import { AsyncStorage } from 'react-native';
+import { Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -33,7 +33,16 @@ let MyComponent = () => (
     <Stack.Navigator>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Home" options={{
+        headerTitle: "Address",
+        headerRight: () => (
+          <Button
+            onPress={() => alert('This is a button!')}
+            title="Info"
+            color="#fff"
+          />
+          ),
+        }} component={Home} />
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="Edit" component={Edit} />
       <Stack.Screen name="Add" component={Add} />

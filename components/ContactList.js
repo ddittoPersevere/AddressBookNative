@@ -22,11 +22,10 @@ const ContactList = (props) => (
         </View>
         :
         <Text>No contacts.</Text> }
-        {console.log(props)}
             {
                 props.contacts.map((item) =>
                     (
-                        <TouchableHighlight key={item.id} onPress={(e) => props.navigation.navigate('Login', {
+                        <TouchableHighlight key={item.id} onPress={(e) => props.navigation.navigate('Edit', {
                             id: item.id
                         })}>
                             <Contact {...item}/>
