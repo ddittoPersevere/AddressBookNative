@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableHighlight,
-  Image} from 'react-native';
+import { StyleSheet, View, TouchableHighlight} from 'react-native';
+import { Text, Card, Input, Image} from 'react-native-elements';
 import {connect} from 'react-redux'
 
 import {login} from '../actions/loginActions'
@@ -41,38 +37,40 @@ class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/>
-          <TextInput style={styles.inputs}
-              ref={input => { this.emailInput = input }}
-              placeholder="Email"
-              keyboardType="default"
-              underlineColorAndroid='transparent'
-              onChangeText={(email) => this.setState({email})}/>
-        </View>
-        
-        <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db'}}/>
-          <TextInput style={styles.inputs}
-              ref={input => { this.passwordInput = input }}
-              placeholder="Password"
-              secureTextEntry={true}
-              underlineColorAndroid='transparent'
-              onChangeText={(password) => this.setState({password})}/>
-        </View>
+        <Card>
+          <View style={styles.inputContainer}>
+            
+            <Input style={styles.inputs}
+                ref={input => { this.emailInput = input }}
+                placeholder="Email"
+                keyboardType="default"
+                underlineColorAndroid='transparent'
+                onChangeText={(email) => this.setState({email})}/>
+          </View>
+          
+          <View style={styles.inputContainer}>
+            
+            <Input style={styles.inputs}
+                ref={input => { this.passwordInput = input }}
+                placeholder="Password"
+                secureTextEntry={true}
+                underlineColorAndroid='transparent'
+                onChangeText={(password) => this.setState({password})}/>
+          </View>
 
-        {
-          this.props.creds.error &&
-          <Text style={styles.loginText}>{this.props.creds.error}</Text>
-        }
-        
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
-          <Text style={styles.loginText}>Login</Text>
-        </TouchableHighlight>
+          {
+            this.props.creds.error &&
+            <Text style={styles.loginText}>{this.props.creds.error}</Text>
+          }
+          
+          <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
+            <Text style={styles.loginText}>Login</Text>
+          </TouchableHighlight>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('register')}>
-            <Text>Register</Text>
-        </TouchableHighlight>
+          <TouchableHighlight style={styles.buttonContainer, styles.registerButton} onPress={() => this.onClickListener('register')}>
+              <Text style={styles.loginText}>Register</Text>
+          </TouchableHighlight>
+        </Card>
       </View>
     );
   }
@@ -90,17 +88,21 @@ const styles = StyleSheet.create({
       backgroundColor: '#FFFFFF',
       borderRadius:30,
       borderBottomWidth: 1,
-      width:250,
-      height:45,
+      // width:250,
+      height:55,
       marginBottom:20,
       flexDirection: 'row',
-      alignItems:'center'
+      alignItems:'center',
+      justifyContent: 'center'
   },
   inputs:{
-      height:45,
+      height:55,
       marginLeft:16,
       borderBottomColor: '#FFFFFF',
       flex:1,
+      alignItems: 'center',
+      textAlign: 'center',
+      justifyContent: 'center'
   },
   inputIcon:{
     width:30,
@@ -114,11 +116,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom:20,
-    width:250,
+    // width:250,
     borderRadius:30,
   },
   loginButton: {
     backgroundColor: "#00b5ec",
+  },
+  registerButton: {
+    backgroundColor: "#00b5ec",
+    width:200,
+    height: 35,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 68,
+    borderRadius:30,
   },
   loginText: {
     color: 'white',

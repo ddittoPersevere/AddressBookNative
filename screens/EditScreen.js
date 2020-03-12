@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, Button, TextInput } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { Input, Text, Card, Button } from 'react-native-elements';
 import {connect} from 'react-redux'
-import Form from '../components/Form'
 import {editContact} from '../actions/contactActions'
 
 // Component that handles editing Contact using
@@ -23,65 +23,74 @@ class EditContact extends Component {
     }
     render(){
         return (
-            <View>
-                <View>
-                    <Text>Edit Contact</Text>
-                    <View>
-
-                <Text>Name</Text>
-
-                <TextInput 
-                    name="name" 
-                    value={this.state.name} 
-                    onChange={(e)=>{
-                        this.setState({name: e.nativeEvent.text})
-                    }}
-                    ref={input => { this.nameInput = input }}
-                />
-
-                    {this.state.nError && <Text>{this.state.nError}</Text>}
-
-                    <Text>Email</Text>
-
-                    <TextInput 
-                        name="email"
-                        value={this.state.email} 
+            <View style={styles.container}>
+                <Card>
+                    <Text>Name</Text>
+                    <Input 
+                        name="name" 
+                        value={this.state.name} 
                         onChange={(e)=>{
-                            this.setState({email: e.nativeEvent.text})
+                            this.setState({name: e.nativeEvent.text})
                         }}
-                        ref={input => { this.emailInput = input }}
+                        ref={input => { this.nameInput = input }}
                     />
 
-                    {this.state.eError && <Text>{this.state.eError}</Text>}
-                    
-                    <Text>Phone</Text>
+                        {this.state.nError && <Text>{this.state.nError}</Text>}
+                        <View>
+                            <Text></Text>
+                        </View>
+                        
+                        <Text>Email</Text>
 
-                    <TextInput 
-                        name="phone" 
-                        value={this.state.phone} 
-                        onChange={(e)=>{
-                            this.setState({phone: e.nativeEvent.text})
-                        }}
-                        ref={input => { this.phoneInput = input }}
-                    />
-                    
-                    <Button title="Submit"
-                        onPress={() => {
-                            this.onSubmit()
-                        }} 
-                    />
-                </View>
-                    <Button
-                      title="Go to Add"
-                      onPress={() => {
-                        this.props.navigation.navigate('Add');
-                      }}
-                    />
-                </View>
+                        <Input 
+                            name="email"
+                            value={this.state.email} 
+                            onChange={(e)=>{
+                                this.setState({email: e.nativeEvent.text})
+                            }}
+                            ref={input => { this.emailInput = input }}
+                        />
+
+                        {this.state.eError && <Text>{this.state.eError}</Text>}
+                        <View>
+                            <Text></Text>
+                        </View>
+                        
+                        <Text>Phone</Text>
+
+                        <Input 
+                            name="phone" 
+                            value={this.state.phone} 
+                            onChange={(e)=>{
+                                this.setState({phone: e.nativeEvent.text})
+                            }}
+                            ref={input => { this.phoneInput = input }}
+                        />
+                        
+                        <View>
+                            <Text></Text>
+                        </View>
+
+                        <Button title="Submit"
+                            onPress={() => {
+                                this.onSubmit()
+                            }}
+                            style={{
+                                marginTop:5
+                            }}
+                        />
+                </Card>
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+    }
+})
 
 // finds Contact in state that matches dynamic URL parameter
 const mapStateToProps = (state, props) => ({

@@ -3,12 +3,11 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { connect } from 'react-redux'
-import { Button } from 'react-native';
+import { Button } from 'react-native-elements';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { setContacts } from './actions/contactActions'
-import { _login } from './actions/loginActions'
+import { logout } from './actions/loginActions'
 import Home from './screens/HomeScreen'
 import Login from './screens/LoginScreen'
 import Signup from './screens/SignupScreen'
@@ -16,6 +15,7 @@ import Search from './screens/SearchScreen'
 import Edit from './screens/EditScreen'
 import Add from './screens/AddScreen'
 import storeCreator from './store/configureStore'
+import { View } from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -28,48 +28,51 @@ store.subscribe(() => {
     console.log(state)
 })
 
-let MyComponent = () => (
-  <NavigationContainer>
-    <Stack.Navigator>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Signup" component={Signup} />
-      <Stack.Screen name="Home" options={{
-        headerTitle: "Address",
-        headerRight: () => (
-          <Button
-            onPress={() => alert('This is a button!')}
-            title="Info"
-            color="#fff"
-          />
-          ),
-        }} component={Home} />
-      <Stack.Screen name="Search" component={Search} />
-      <Stack.Screen name="Edit" component={Edit} />
-      <Stack.Screen name="Add" component={Add} />
-    </Stack.Navigator>
-  </NavigationContainer>
-)
+
+let MyComponent = (props) => {
+  let headerOptions = {
+    headerTitle: props.login.username + "'s Address Book",
+    headerRight: () => (
+      <View style={{flexDirection: "row",justifyContent: "flex-end",paddingRight:10,width: 120}}>
+        <Button
+        onPress={() => {
+          props.dispatch(logout())
+        }}
+        raised={true}
+        title="Log Out"
+        style={{
+          marginHorizontal: 5,
+        }}
+        />
+      </View>
+      
+      ),
+    }
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen name="Home" options={headerOptions} component={Home} />
+        <Stack.Screen name="Search" options={headerOptions}  component={Search} />
+        <Stack.Screen name="Edit" options={headerOptions}  component={Edit} />
+        <Stack.Screen name="Add" options={headerOptions}  component={Add} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
 
 const mapStateToProps = (state) => ({
   login : state.login
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  _login : (token, username, error) => dispatch(_login(token, username, error)),
-  setContacts : () => dispatch(setContacts())
-})
+// const mapDispatchToProps = (dispatch) => ({
+//   logout : () => dispatch(logout()),
+// })
 
-MyComponent = connect(mapStateToProps, mapDispatchToProps)(MyComponent)
+MyComponent = connect(mapStateToProps)(MyComponent)
 
 class App extends React.Component {
-  componentDidMount(){
-    // if(AsyncStorage.getItem('userToken')){
-    //   let token =  AsyncStorage.getItem('jwt')
-    //   let username =  AsyncStorage.getItem('userName')
-    //     this.props._login(token, username, undefined)
-    //     this.props.setContacts()
-    // }
-  }
   render(){
     return (
       <Provider store={ store }>

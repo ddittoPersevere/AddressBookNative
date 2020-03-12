@@ -1,34 +1,24 @@
-import React, { Component } from 'react';
-import { Text, View, Button } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Card } from 'react-native-elements';
 import {connect} from 'react-redux'
-
 
 import Form from '../components/Form'
 
 const Add = (props) => {
-    // this.onSubmit = (contact) => {
-    //   props.addContact(contact)
-    // }
-
     return (
-      <View>
-        <Text>Add Contact</Text>
-        <Form />
-        <Button
-        title="Go to Login"
-        onPress={() => {
-          props.navigation.navigate('Login');
-        }}
-        />
+      <View style={styles.container} >
+        <Card>
+          <Form navigation={props.navigation} />
+        </Card>
       </View>
     );
 }
 
-// const mapStateToProps = (state, props) => ({
-//   contact : state.contacts.find((item)=> item.id === props.match.params.id)
-// })
-// const mapDispatchToProps = (dispatch) => ({
-//   addContact : (contact) => dispatch(addContact(contact))
-// })
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  }
+})
 export default connect()(Add)

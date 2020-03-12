@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Text, View, Button, TextInput } from 'react-native';
+import { View } from 'react-native';
+import { Input, Button, Text } from 'react-native-elements';
 
 import {addContact} from '../actions/contactActions'
 
@@ -26,6 +27,7 @@ class Form extends React.Component {
             this.setState({eError: 'Please enter a valid email'})
         }else{
             this.props.dispatch(addContact({name: this.state.name, email: this.state.email, phone: this.state.phone}))
+            this.props.navigation.navigate('Home');
             this.emailInput.clear()
             this.nameInput.clear()
             this.phoneInput.clear()
@@ -37,7 +39,7 @@ class Form extends React.Component {
 
                 <Text>Name</Text>
 
-                <TextInput 
+                <Input 
                     name="name" 
                     value={this.state.name} 
                     onChange={(e)=>{
@@ -47,10 +49,13 @@ class Form extends React.Component {
                 />
 
                 {this.state.nError && <Text>{this.state.nError}</Text>}
+                <View>
+                    <Text></Text>
+                </View>
 
                 <Text>Email</Text>
 
-                <TextInput 
+                <Input 
                     name="email"
                     value={this.state.email} 
                     onChange={(e)=>{
@@ -60,10 +65,13 @@ class Form extends React.Component {
                 />
 
                 {this.state.eError && <Text>{this.state.eError}</Text>}
+                <View>
+                    <Text></Text>
+                </View>
                 
                 <Text>Phone</Text>
 
-                <TextInput 
+                <Input 
                     name="phone" 
                     value={this.state.phone} 
                     onChange={(e)=>{
@@ -71,11 +79,21 @@ class Form extends React.Component {
                     }}
                     ref={input => { this.phoneInput = input }}
                 />
+                <View>
+                    <Text></Text>
+                </View>
+
+                <View>
+                    <Text></Text>
+                </View>
                 
                 <Button title="Submit"
                     onPress={() => {
                         this.validate()
-                    }} 
+                    }}
+                    style={{
+                        marginTop:5
+                    }}
                 />
             </View>
         )

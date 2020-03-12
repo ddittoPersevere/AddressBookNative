@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Text, Button, View, TouchableHighlight } from 'react-native';
+import { TouchableHighlight } from 'react-native';
+import { Card, Text, ButtonGroup } from 'react-native-elements'
 import Contact from './Contact'
 import filterContacts from '../selectors/selectors'
 import { sortByName, sortByEmail } from '../actions/filterActions'
@@ -11,30 +12,42 @@ import { sortByName, sortByEmail } from '../actions/filterActions'
 // Filtered Contacts are mapped through, and their 
 // details are passed to <Contact /> component
 
-const ContactList = (props) => (
-    <View>
-        {/* If contacts belong to user, they are displayed.
-        If not, 'No contacts' is displayed. */}
-        {props.contacts.length > 0 ?
-        <View>
-            <Button title="Sort By Name" onPress={(e) => props.dispatch(sortByName())} />
-            <Button title="Sort By Email" onPress={(e) => props.dispatch(sortByEmail())} />
-        </View>
-        :
-        <Text>No contacts.</Text> }
-            {
-                props.contacts.map((item) =>
-                    (
-                        <TouchableHighlight key={item.id} onPress={(e) => props.navigation.navigate('Edit', {
-                            id: item.id
-                        })}>
-                            <Contact {...item}/>
-                        </TouchableHighlight>
+const ContactList = (props) => {
+    const buttons = ['Sort By Name', 'Sort By Email']
+    return (
+        <Card>
+            {/* If contacts belong to user, they are displayed.
+            If not, 'No contacts' is displayed. */}
+            {props.contacts.length > 0 ?
+            <ButtonGroup
+                onPress={(selectedIndex) => {
+                    if(selectedIndex == 0){
+                        props.dispatch(sortByName())
+                    }else{
+                        props.dispatch(sortByEmail())
+                    }
+                }}
+                buttons={buttons}
+                containerStyle={{height: 50}}
+            />
+            :
+            <Text>No contacts.</Text> }
+                {
+                    props.contacts.map((item) =>
+                        (
+                            <TouchableHighlight key={item.id} onPress={(e) => {
+                                props.navigation.navigate('Edit', {
+                                    id: item.id
+                                })
+                            }}>
+                                <Contact {...item}/>
+                            </TouchableHighlight>
+                        )
                     )
-                )
-            }
-    </View>
-)
+                }
+        </Card>
+    )
+}
 
 // Pulls Contacts from 'contact' state, and uses
 // 'filter' state to filter/sort them

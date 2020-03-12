@@ -1,4 +1,5 @@
-import { Text, View, Button, TextInput, AsyncStorage } from 'react-native';
+import { View, Button, AsyncStorage } from 'react-native';
+import { Input, Text } from 'react-native-elements';
 import React from 'react'
 import {connect} from 'react-redux'
 import {signup, _login} from '../actions/loginActions'
@@ -20,25 +21,25 @@ class Signup extends React.Component {
     }
     render(){
         return (
-            this.props.creds.token ? this.props.navigation.navigate('Login') :
+            this.props.creds.token ? () => this.props.navigation.navigate('Login') :
             <View>
                 <View>
                     <Text>Sign Up</Text>
                     <View>
                         <Text>Username</Text>
-                        <TextInput name="username" onChange={(event) => {
+                        <Input name="username" onChange={(event) => {
                             this.setState({username: event.nativeEvent.text})
                         }}/>
                         <Text>Email</Text>
-                        <TextInput name="email" onChange={(event) => {
+                        <Input name="email" onChange={(event) => {
                             this.setState({email: event.nativeEvent.text})
                         }}/>
                         <Text>Password</Text>
-                        <TextInput name="password" onChange={(event) => {
+                        <Input name="password" onChange={(event) => {
                             this.setState({password: event.nativeEvent.text})
                         }}/>
                         <Text>Repeat Password</Text>
-                        <TextInput name="repeat" onChange={(event) => {
+                        <Input name="repeat" onChange={(event) => {
                             this.setState({repeat: event.nativeEvent.text})
                         }}/>
                         {

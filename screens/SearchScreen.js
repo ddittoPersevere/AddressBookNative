@@ -1,36 +1,26 @@
 import React from 'react';
-import { Text, View, Button, TextInput } from 'react-native';
+import { ScrollView } from 'react-native';
+import { Input, Card } from 'react-native-elements';
 import {connect} from 'react-redux'
 import ContactList from '../components/ContactList'
 import { setNameFilter, setEmailFilter, setPhoneFilter } from '../actions/filterActions'
 
 const Search = (props) => {
     return (
-      <View>
-        <Text>Search</Text>
-          <View>
-            <View>
-                <View>
-                    <TextInput name="name" placeholder="Name Filter" onChange={(event) => {
-                      props.dispatch(setNameFilter(event.nativeEvent.text))
-                    }}/>
-                    <TextInput name="email" placeholder="Email Filter" onChange={(event) => {
-                      props.dispatch(setEmailFilter(event.nativeEvent.text))
-                    }}/>
-                    <TextInput name="phone" placeholder="Phone Filter" onChange={(event) => {
-                      props.dispatch(setPhoneFilter(event.nativeEvent.text))
-                    }}/>
-                </View>
-                <ContactList />
-            </View>
-          </View>
-        <Button
-        title="Go to Edit"
-        onPress={() => {
-          props.navigation.navigate('Edit');
-        }}
-      />
-      </View>
+      <ScrollView>
+          <Card>
+              <Input name="name" placeholder="Search by Name" onChange={(event) => {
+                props.dispatch(setNameFilter(event.nativeEvent.text))
+              }}/>
+              <Input name="email" placeholder="Search by Email" onChange={(event) => {
+                props.dispatch(setEmailFilter(event.nativeEvent.text))
+              }}/>
+              <Input name="phone" placeholder="Search by Phone" onChange={(event) => {
+                props.dispatch(setPhoneFilter(event.nativeEvent.text))
+              }}/>
+          </Card>
+          <ContactList navigation={props.navigation} />
+      </ScrollView>
     );
 }
 
